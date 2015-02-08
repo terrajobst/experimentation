@@ -1,1 +1,9 @@
 site_name: CLR MD
+pages:
+- ['index.md', 'Introduction']
+- ['GettingStarted.md', 'Getting Started']
+- ['ClrRuntime.md', 'CLR MD']
+- ['WalkingTheHeap.md', 'Walking the Heap']
+- ['TypesAndFields.md', 'Types and Fields']
+- ['MachineCode.md', 'Machine Code']
+- ['FAQ.md', 'FAQ']
