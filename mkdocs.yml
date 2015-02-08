@@ -1,4 +1,5 @@
 site_name: CLR MD
+docs_dir: Documentation
 pages:
 - ['index.md', 'Introduction']
 - ['GettingStarted.md', 'Getting Started']
