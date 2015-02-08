@@ -2,9 +2,9 @@ site_name: CLR MD
 docs_dir: Documentation
 pages:
 - ['index.md', 'Introduction']
-- ['GettingStarted.md', 'Getting Started']
+- ['GettingStarted.md', 'Tutorial', 'Getting Started']
 - ['ClrRuntime.md', 'Tutorial', 'ClrRuntime']
 - ['WalkingTheHeap.md', 'Tutorial', 'Walking the Heap']
 - ['TypesAndFields.md', 'Tutorial', 'Types and Fields']
-- ['MachineCode.md', 'Machine Code']
-- ['FAQ.md', 'FAQ']
+- ['MachineCode.md', 'Tutorial', 'Machine Code']
+- ['FAQ.md', 'FAQ', 'FAQ']
