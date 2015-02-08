@@ -273,5 +273,3 @@ Calling this code is as simple as:
     // or: ClrRuntime runtime = CreateRuntime(target, @"c:\dac_cache\mscordacwks.dll");
 
 The next tutorial will cover some basic uses of the `ClrRuntime` class.
-
-Next Tutorial: [The ClrRuntime Object](ClrRuntime.md)

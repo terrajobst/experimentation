@@ -351,5 +351,3 @@ In this tutorial we covered the `ClrRuntime` object and the data it provides.
 Please keep in mind the difference between properties in ClrMD (fast, you can
 keep referring back to the property) and functions which produce a list or
 enumeration (slow, you should cache the result and not call again).
-
-Next tutorial: [Walking the Heap](WalkingTheHeap.md)

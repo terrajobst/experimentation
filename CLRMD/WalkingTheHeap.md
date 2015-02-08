@@ -247,5 +247,3 @@ As you can see, it doesn't take much work to walk the heap. To do anything
 useful with the objects you get, though, you will need to work with the
 `GCHeapType` for that object. In the next tutorial we will fully explore types
 in CLRMD.
-
-Next Tutorial: [Types and Fields in CLRMD](TypesAndFields.md)
