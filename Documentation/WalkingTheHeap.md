@@ -1,6 +1,4 @@
-# The GC Heap
-
-## Introduction to the GC Heap
+# Introduction to the GC Heap
 
 CLR's GC is a generational, mark and sweep GC. There are 3 generations in the
 process, gen0, gen1, and gen2. Objects are allocated in gen0, and whenever an
@@ -46,7 +44,7 @@ however, use the gen2 segments to do this. Instead we allocate these objects in
 properties: all objects in them are considered gen2 and no object in them may be
 relocated (we treat objects in these segments as pinned).
 
-## Getting the Heap and Walking Segments
+# Getting the Heap and Walking Segments
 
 The `CLRRuntime` object has a function called GetHeap, which returns a `GCHeap`
 object. The `GCHeap` object, among other things, allows you to walk each segment
@@ -93,7 +91,7 @@ table showing logical heap balance:
 
 As mentioned before, logical heap imbalance in server GC can cause perf issues.
 
-## Walking Managed Objects in the Process
+# Walking Managed Objects in the Process
 
 As mentioned before, GC segments contain managed objects. You can walk all
 objects on a segment by starting at `GCHeapSegment.FirstObject` and repeatedly
@@ -141,7 +139,7 @@ non-null. `GCHeapSegment.NextObject` does not attempt to detect heap corruption,
 so it is possible `GetObjectType` will return null if the address that
 NextObject returns is a corrupt object.
 
-## Walking objects without walking the segments
+# Walking objects without walking the segments
 
 There is another way to walk the heap, one which takes far less code than
 walking each segment: GCHeap.EnumerateObjects. Here is an example:
@@ -175,7 +173,7 @@ objects) or if you need segment data (such as what generation an object is), you
 should use the first code. If you simply need to walk all objects on the heap,
 use the second code.
 
-## A non-linear heap walk
+# A non-linear heap walk
 
 The approach above is a good way to to walk every object on the heap. But what
 if you want to only walk a subset of objects? For example, let's say you have an
@@ -232,7 +230,7 @@ Given an object, you can enumerate all objects it points to using
         }
     }
 
-### Why do we need EnumerateRefsOfObject?
+## Why do we need EnumerateRefsOfObject?
 
 You might be wondering why we need `EnumerateRefsOfObject` at all. As you will
 see in the next tutorial, you can walk each field in the object and get its
@@ -241,7 +239,7 @@ value. You could implement this algorithm by walking fields instead. However,
 does to get object references out of the object, which is far more efficient
 than walking fields to look for objects.
 
-## Conclusion
+# Conclusion
 
 As you can see, it doesn't take much work to walk the heap. To do anything
 useful with the objects you get, though, you will need to work with the

@@ -1,6 +1,4 @@
-# Types and Fields in CLRMD
-
-## Introduction
+# Introduction
 
 An object's type in CLRMD is represented by `GCHeapType`. This class has two
 sets of operations. The first is to provide data about an instance of that type.
@@ -13,7 +11,7 @@ and so on.
 In general, there is no wrapper types for an object in CLR MD, but other types
 in CLR MD take an object address as a parameter to operate on.
 
-## A short note about MethodTables
+# A short note about MethodTables
 
 If you come from a background of using SOS or PSSCOR you might be asking, what
 about MethodTables?
@@ -46,7 +44,7 @@ easy, even though I don't give a direct way to the MethodTable through the API:
         // mt now contains obj's MethodTable.
     }
 
-## Basic type information
+# Basic type information
 
 We'll start with basic operations of a type. There are a few fairly self
 explanatory functions and properties, such as `GCHeapType.Name` (the name of the
@@ -145,7 +143,7 @@ representation for the value for that type.
         }
     }
 
-## Working with embedded structs
+# Working with embedded structs
 
 As you've already seen, value classes (C#'s "structs") require special handling.
 CLR recursively embeds structs in types, this means that if you had a class
@@ -270,19 +268,19 @@ This would print out something like:
     +08 System.Int32 two.b = 0
     +10 System.Int32 two.three.j = 0
 
-## One last note about fields
+# One last note about fields
 
 As you can see, working with fields is unfortunately very complex in CLRMD. We
 are forced into this complex design to accomodate the full expressiveness of
 CLR's type system.
 
-## Special Subtypes
+# Special Subtypes
 
 There are several special "subtypes" that you should be aware of. For example,
 Arrays, Enums, Exceptions, and Free objects. We will go into depth on each of
 these.
 
-## Arrays
+# Arrays
 
 Arrays in CLRMD are unfortunately another complex topic, again due to embedded
 structs. Before we look at the complex case, let's look at an array of ints, as
@@ -375,7 +373,7 @@ Of course, these embedded structs can also have embedded structs within them!
 You would need to recursively walk these structs (as we did earlier) to fully
 walk the contents of these arrays.
 
-## Enums
+# Enums
 
 You can check if a type is an Enum by checking the `GCHeapType.IsEnum` property.
 If a type is an Enum, you can get the list of enumeration values it contains
@@ -429,7 +427,7 @@ some of these concepts:
                 Console.WriteLine("{0} - {1}", objValue, "Unknown");
         }
 
-## Exceptions
+# Exceptions
 
 Exceptions in CLRMD are objects which derrive from `System.Exception`. CLR
 itself does not actually make that distinction, almost any object can be thrown
@@ -465,7 +463,7 @@ it will not have an exception stack trace. In these cases,
 `GCHeapException.StackTrace` will be a list of length 0 (so the above code will
 simply not print a stack trace in that case).
 
-## "Free" objects
+# "Free" objects
 
 When enumerating the heap, you will notice a lot of "Free objects". These are
 denoted by the `GCHeapType.IsFree` property.
@@ -476,12 +474,12 @@ fields (though they do have a size). In general, if you are trying to find heap
 fragmentation, you will need to take a look at how many Free objects there are,
 how big they are, and what lies between them. Otherwise, you should ignore them.
 
-## Getting Methods
+# Getting Methods
 
 Enumerating methods on a type is currently not implemented (as of Beta 0.5).
 This will be done before 1.0 is released.
 
-## Enumerating all types
+# Enumerating all types
 
 Previously, we have talked about types by starting from an object instance and
 getting the type from it. However, there are also circumstances where you want

@@ -1,12 +1,10 @@
-# Getting Started
-
 This tutorial introduces you to the concepts of working with
 `Microsoft.Diagnostics.Runtime.dll` (called 'ClrMD' for short), and the
 underlying reasons why we do things the way we do. If you are already familiar
 with the dac private API, you should skip down below to the code which shows you
 how to create a ClrRuntime instance from a crash dump and a dac.
 
-## CLR Debugging, a brief introduction
+# CLR Debugging, a brief introduction
 
 All of .Net debugging support is implemented on top of a dll we call "The Dac".
 This file (usually named `mscordacwks.dll`) is the building block for both our
@@ -40,7 +38,7 @@ ClrMD is a publically shipping, documented API. You may build your own programs
 on top of it and ship them outside of Microsoft (which is not true if you build
 on top of the raw Dac private APIs).
 
-## What do I need to debug a crash dump with ClrMD?
+# What do I need to debug a crash dump with ClrMD?
 
 As mentioned before, all .Net debugging is implemented on top of the Dac. To
 debug a crash dump or live process, all you need to do is have the crash dump
@@ -59,7 +57,7 @@ amd64 crash dump. This means you will have to relaunch your tool under wow64 (or
 vice versa) if you detect that the dump you are debugging is not the same
 architecture as you currently are.
 
-## Loading a crash dump
+# Loading a crash dump
 
 To get started the first thing you need to do is to create a `DataTarget`. The
 `DataTarget` class represents a crash dump or live process you want to debug
@@ -111,7 +109,7 @@ with the full path to the dac:
 We will cover what to actually do with a `ClrRuntime` object in the next few
 tutorials.
 
-## Attaching to a live process
+# Attaching to a live process
 
 CLRMD can also attach to a live process (not just work from a crashdump). To do
 this, everything is the same, except you call `DataTarget.AttachToProcess`
@@ -155,7 +153,7 @@ debugger has the target process paused. You should use an invasive attach if you
 need to control the target process. You should use a non-invasive attach for all
 other uses of the API.
 
-## Detatching from a process or dump
+# Detatching from a process or dump
 
 DataTarget implements the `IDisposable` interface. Every instance of
 `DataTarget` should be wrapped with a using statement (otherwise you should find
@@ -175,7 +173,7 @@ if the process is terminated normally. However I highly recommend that your
 program eagerly call `Dispose` as soon as you are done using ClrMD on the
 process.
 
-## Getting the Dac from the Symbol Server
+# Getting the Dac from the Symbol Server
 
 ClrMD has a method for automatically downloading the dac from the public (or
 internal) symbol servers. With no parameters, the following code will attempt to
@@ -242,7 +240,7 @@ Where `GetSymbolPath` is defined as:
 
 This should find most symbols for internal builds when inside corpnet.
 
-## Putting it all together
+# Putting it all together
 
 We have covered the building blocks of creating a `DataTarget` and a
 `ClrRuntime` instance. Here is everything all together:

@@ -1,6 +1,4 @@
-# ClrRuntime, the core of ClrMD
-
-## Introduction
+# Introduction
 
 In the last tutorial we covered how to load a crash dump. In this tutorial we
 will look at the `ClrRuntime` class, the entrypoint and core of this API.
@@ -13,7 +11,7 @@ In this tutorial we will cover how to get data about the targeted runtime such
 as enumerating AppDomains, Threads, and the Memory Regions CLR has allocated, as
 well as the GC Handle table and finalizer queue.
 
-## Very Basic Operations
+# Very Basic Operations
 
 `ClrRuntime` implements a handful of grab-bag operations which you can use to
 get some bits of information about the runtime. The first (and simplest) is that
@@ -49,14 +47,14 @@ fields) is a primitive, object reference, or value class (struct).
 That's it for the most basic functions in `ClrRuntime`. Now off to the more
 structured data...
 
-## AppDomains
+# AppDomains
 
 AppDomains in ClrMD are (for now!) one of the simplest data structures to walk.
 This is because as of Beta 0.3, we do not expose a lot of information about
 them. Future versions of ClrMD will be able to enumerate modules loaded into the
 AppDomain as well as more information about the state of the AppDomain.
 
-### Enumerating AppDomains
+## Enumerating AppDomains
 
 To walk AppDomains in the process, simply use the `ClrRuntime.AppDomains`
 property:
@@ -76,7 +74,7 @@ memory regions, which we will cover later). The intent is that when we have
 AppDomain information, you can display either the AppDomain ID or Name
 associated with it.
 
-## Threads
+# Threads
 
 Thankfully, you can do a lot more with threads in ClrMD than you can AppDomains.
 Similar to `ClrRuntime.AppDomains`, there is a `ClrRuntime.Threads` property,
@@ -89,7 +87,7 @@ the thread, and so on.
 
 The most interesting of which is stack walking, so we'll start there.
 
-### Walking the stack
+## Walking the stack
 
 You can walk the managed stack of any thread in the process by simply
 enumerating the `ClrThread.StackTrace` property. Here's an example of printing
@@ -112,7 +110,7 @@ Note that to get the class/function name that we are currently executing,
 calling `ClrStackFrame.ToString` will give you output roughly equivalent to
 SOS's `!ClrStack`.
 
-### Caveats
+## Caveats
 
 There are a few caveats to `ClrThread` objects which you should be aware of:
 
@@ -141,7 +139,7 @@ what every stack frame is running in. The Dac private API is limited in that it
 cannot give us per-frame AppDomain information, so ClrMD cannot give you that
 information.
 
-## Enumerating CLR Memory Regions
+# Enumerating CLR Memory Regions
 
 CLR can allocate a lot of memory over the lifetime of a process. When debugging
 memory issues, a common question is "where did all of my memory go?" To help
@@ -200,7 +198,7 @@ Note that I have eliminated `ReservedGCSegments` from this table. That's because
 `ReserveGCSegments` are just that...reserved memory which isn't counting toward
 your workingset.
 
-## A quick word about Enumerators vs. Properties in ClrMD
+# A quick word about Enumerators vs. Properties in ClrMD
 
 As you have probably noticed, `ClrRuntime.Threads` and `ClrRuntime.AppDomains`
 are properties, yet `ClrRuntime.EnumerateMemoryRegions` is a function (which
@@ -221,7 +219,7 @@ function which gives you a list/enumeration back to you, you should be careful
 to only enumerate that data once and cache what you need out of it or you may
 pay a hefty perf penalty.
 
-## Enumerating the FinalizerQueue
+# Enumerating the FinalizerQueue
 
 The finalizer queue in CLR is a list of objects which have been collected and
 will soon have their finalizer run. Enumerating all objects on the finalizer
@@ -235,7 +233,7 @@ Of course, at this point I have not shown you what you can do with object
 addresses in ClrMD. That will come in the next tutorial
 [Enumerating the Heap](WalkingTheHeap.md).
 
-## Enumerating GC Handles in the Process
+# Enumerating GC Handles in the Process
 
 The last thing we will cover in this tutorial is how to walk the GC Handle
 table. A GC Handle consists of three basic building blocks: An object, a handle
@@ -254,7 +252,7 @@ handles and their types:
 Note this example doesn't do anything with types of objects on the heap. Please
 see the `GCHandles` code snippet for a different way of breaking down handles.
 
-### Types of GC Handles
+## Types of GC Handles
 
 Each handle type is either weak (meaning it does not keep the object alive from
 the GC's perspective) or strong (meaning as long as the handle exists we will
@@ -282,7 +280,7 @@ There are 9 handle types, each with a special meaning:
 The last three, RefCount handles, Dependent handles, and SizedRef handles each
 have caveats that you should be aware of.
 
-### RefCount Handles
+## RefCount Handles
 
 RefCount handles are used for COM interop, and obviously one of the most
 important things to know about a RefCount handle is the actual refcount itself.
@@ -295,7 +293,7 @@ handles get cleaned up when their count hits 0. So the only time you would get a
 false-positive in v2 is if the crash dump was taken after the real ref count hit
 0 and before the next GC cleaned it up.
 
-### SizedRef Handles
+## SizedRef Handles
 
 SizedRef handles are used exclusively by Asp.Net to hold onto caches of objects.
 As the GC marks objects it keeps track of what objects the handle keeps alive.
@@ -306,7 +304,7 @@ inaccurate `!objsize`.
 Unfortunately the Dac does not expose any way to get the size which the SizedRef
 handle holds onto, so neither does ClrMD.
 
-### Dependent Handles
+## Dependent Handles
 
 Dependent handles are a very complicated topic. They were added in v4 as a way
 to add an edge to the GC graph. A dependent handle consists of the handle
@@ -328,7 +326,7 @@ code to `!objsize` or `!gcroot`, you must take dependent handles into account. A
 dependent handle adds real edges to the graph and need to be treated as any
 other object reference to get accurate results.
 
-### A word about v2 and v4 CLR handle walking
+## A word about v2 and v4 CLR handle walking
 
 One last note about the Handles you get in ClrMD: The GC handle table data you
 get will be incomplete on v2 and v4. In v2 there was a very nasty bug in the Dac
@@ -345,7 +343,7 @@ the handles. On v4.5, you get 100% of the handles on the handle table. Note that
 this is a fundamental bug in the dac which we cannot work around (SOS and PSSCOR
 is also affected by this issue).
 
-## Conclusion
+# Conclusion
 
 In this tutorial we covered the `ClrRuntime` object and the data it provides.
 Please keep in mind the difference between properties in ClrMD (fast, you can

@@ -1,6 +1,4 @@
-# Frequently Asked Questions (FAQs)
-
-## The API is in beta, how stable is it?
+# The API is in beta, how stable is it?
 
 The API is in beta for two reasons: Not all planned features are implemented and
 I may change the public surface of the API.
@@ -8,7 +6,7 @@ I may change the public surface of the API.
 Currently all implemented features are fairly well tested, and the API itself is
 used in PerfView for real world diagnostics.
 
-## Does this API work with live processes or only dump files?
+# Does this API work with live processes or only dump files?
 
 Currently, this API is only supported with dump files. There is experimental
 support for attaching to a live process (without suspending that process) to
@@ -18,7 +16,7 @@ and not at all supported.
 In a future release, I will be adding support for suspending a live process to
 collect data. This is not yet implemented.
 
-## This API was written in C#. How should I use it in my C++ code?
+# This API was written in C#. How should I use it in my C++ code?
 
 CLR MD exposes COM bindings for its API. Please see the C Example for getting
 started with that.
@@ -27,7 +25,7 @@ Please note that the COM bindings have a bit of overhead (having to marshal data
 in and out of CLR), but are still in the ballpark for performance of pure C#
 code.
 
-## Does this API have any dependencies (what other dlls do I need to bundle with my tool)?
+# Does this API have any dependencies (what other dlls do I need to bundle with my tool)?
 
 CLR MD has no dependencies (other than the correct version of mscordacwks.dll
 for the crash dump you are debugging, which is required for all .Net debugging
@@ -35,7 +33,7 @@ tools). You literally only need to ship ClrMemDiag.dll with your program (and
 have the code written to request the right mscordacwks.dll from the symbol
 server).
 
-## Does this work with any architecture? (x86/x64?)
+# Does this work with any architecture? (x86/x64?)
 
 Yep, this API works with crash dumps of both x86 and amd64 processes.
 
@@ -44,7 +42,7 @@ are reading. Meaning if you are debugging an x86 crash dump, your program must
 run as an x86 process, similar for an x64 dump, you need an x64 process. This is
 usually done with the /platform directive to C#.
 
-## Wait, why do I need to match architecture of my process to the dump?
+# Wait, why do I need to match architecture of my process to the dump?
 
 This library works by loading the private CLR debugging library
 (mscordacwks.dll) into the process. This is a native DLL which is tied to the
@@ -57,7 +55,7 @@ example, you can wrap your calls to the API into a seperate process, then use
 interprocess communication to relay the information. I do not plan on adding
 anything to the API to do this automatically though.
 
-## I can't find the equivalent of `!gcroot` and `!objsize` in SOS, does the API support this?
+# I can't find the equivalent of `!gcroot` and `!objsize` in SOS, does the API support this?
 
 These two commands are not something I would consider fundamental to the API. I
 intentionally do not give a function which runs the equivalent of `!gcroot` and
@@ -76,7 +74,7 @@ only the shortest path, etc.
 I have provided reference implementations of both so they can be modified to
 suit your needs.
 
-## How do I get the MethodTable of an object?
+# How do I get the MethodTable of an object?
 
 I purposefully do not expose the MethodTable of any given object for a few
 reasons:
@@ -89,7 +87,7 @@ reasons:
 3. Everything you would need to do with a MethodTable is neatly wrapped into
    `GCHeapType`.
 
-## How do I get all pinned objects in the process?
+# How do I get all pinned objects in the process?
 
 Walk the handle table and filter it by
 `GCHeapHandle.Type == HandleTypes.Pinned`. Objects returned here are pinned by
