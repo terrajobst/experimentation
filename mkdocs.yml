@@ -3,8 +3,8 @@ docs_dir: Documentation
 pages:
 - ['index.md', 'Introduction']
 - ['GettingStarted.md', 'Getting Started']
-- ['ClrRuntime.md', 'CLR MD']
-- ['WalkingTheHeap.md', 'Walking the Heap']
-- ['TypesAndFields.md', 'Types and Fields']
+- ['ClrRuntime.md', 'Tutorial', 'ClrRuntime']
+- ['WalkingTheHeap.md', 'Tutorial', 'Walking the Heap']
+- ['TypesAndFields.md', 'Tutorial', 'Types and Fields']
 - ['MachineCode.md', 'Machine Code']
 - ['FAQ.md', 'FAQ']
